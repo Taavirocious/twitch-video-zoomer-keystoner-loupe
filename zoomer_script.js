@@ -1406,7 +1406,9 @@ setTimeout(() => {
 }, 5000)
 
 //Whenever the document is resized, the width of the Overlay is adjusted.
-document.body.setAttribute("onresize", "updateDimensions()");
+window.addEventListener('resize', function(event) {
+    updateDimensions();
+}, true);
 
 
 var oldHref = document.location.href;
