@@ -1,0 +1,719 @@
+/********************************************
+*		Color Controls for the UI
+********************************************/
+:root {
+/* Colors for Keystoner Buttons */
+	--bg-reset: RebeccaPurple; 	            
+	--bg-corners: LightGrey;
+	--bg-axis: RebeccaPurple;
+
+/* Hover Colors for Keystoner Buttons */
+	--bg-reset-hover: #c91010;
+	--bg-corners-hover: BlueViolet;
+	--bg-axis-hover: RebeccaPurple;
+
+/* Opacity Controls for Keystoner Buttons */
+    --opacity-reset: 100%;
+    --opacity-corners: 50%;
+    --opacity-axis: 75%;
+    
+/* Opacity Hover Controls For Keystoner Buttons */
+	--opacity-reset-hover: 100%;
+	--opacity-corners-hover: 100%;
+	--opacity-axis-hover: 100%;
+
+/* Drop Shadow Controls for Keystoner Buttons */
+	--push-drop-shadow: 1px 3px 0px LightCyan; 
+	
+	/* TODO RENAMING */
+	--drop-shadow-grid-color: black;
+	/* --drop-shadow-grid-offsets: 2px 1px; */
+	--drop-shadow-grid-blur-radius: 0px;
+
+/* Transition Controls for Keystoner Buttons */
+    --transition-duration: 300ms;
+    --transition-click-duration: 100ms;
+    --transition-type: linear;
+    --transition-click-type: ease;
+
+/* Push Video Effect Control for Keystoner */
+	--push-duration: 100ms;
+
+/* Resize buttons for Loupe */
+/* Additonal Styling for Creating 'Loupe Window' Resize Buttons */
+	--resize-btn-position: absolute;
+	--resize-btn-scale: 35%; /* 50% */
+	--resize-btn-scale-hover: 35%;
+	
+/* Controls for Loupe Dragbox Edge Handles */
+	--dragbox-resizer-position: absolute;
+	--dragbox-resizer-handle-thickness: 4px; /* 4vh; */
+
+/* Z-index positions */
+
+/* Site values: 'Default' is 1; 'Below' is -1; 'Above' is 10; 'Sticky' is 1000; 'Balloon' is 2000; 'Overlay' is 3000, 'Modal' is 5000 */
+	
+	/* Zoomer */
+	--z-index-zoomer-overlay: 10;
+	
+	/* Keystoner */
+	--z-index-keystoner-toggle: 12;
+	--z-index-keystoner-buttons-container: 12;
+	
+	/* Loupe */
+	--z-index-canvas: 10;
+	--z-index-window: 10;
+	
+	--z-index-drag: 12;
+	--z-index-drag-corner: 12;
+
+	--z-index-resize-scaleinfo: 1;
+	--z-index-resize: 10;
+}
+
+/*******************************************
+*		CONTAINER
+*******************************************/
+.zoomer-container-all {
+	width: 100%; /* Updated by updateDimensions() */
+	height: 100%; /* Updated by updateDimensions() */
+	position: absolute;
+	
+	/* Cursor */
+	pointer-events: none;
+}
+
+/*******************************************
+*		ZOOMER OVERLAY
+*******************************************/
+/* Receive clicks that pass through the Loupe upon user initialization */
+.zoomer-overlay {
+	display: none; /* Don't show at the start. */
+	position: absolute;
+	width: 98%;
+	height: 90%;
+	margin: 1%;
+	
+	/* Cursor */
+	cursor: zoom-in;
+	pointer-events: auto;
+	
+	/* Index */
+	z-index: var(--z-index-zoomer-overlay);
+}
+
+/*******************************************
+*		KEYSTONER OVERLAY
+*******************************************/
+.keystoner-overlay {
+	display: none; /* Don't show at the start. */
+	height: 91%;
+	align-content: end; /* Align UI toggle */
+
+	/* Cursor */
+	pointer-events: none;
+}
+
+/* UI Toggle */
+.keystoner-toggle {
+	position: relative;
+	padding: 0px 4px;
+	opacity: 100%;
+	margin: auto auto;
+	background-color: grey;
+	filter: drop-shadow(4px 4px 0px white) drop-shadow(-2px 2px 8px black);
+	transition: background-color cubic-bezier(0.6, 0.63, 0.83, 0.26) 150ms, filter ease 300ms;
+
+	/* Font */
+	font-family: 'Roobert';
+	font-size: 1.3em;
+	font-weight: normal;
+	color: white;
+
+	/* Cursor */
+	cursor: pointer;
+	pointer-events: auto;
+	
+	/* Index */
+	z-index: var(--z-index-keystoner-toggle);
+}
+
+.keystoner-toggle:hover {
+	background-color: RebeccaPurple;
+	filter: drop-shadow(-1px 1px 0px white);
+}
+
+/* Grid for the Keystoner buttons */
+.keystoner-buttons-container {
+	display: none; /* Don't show at the start. */
+	position: absolute;
+	opacity: 100%;
+	width: 100%;
+	height: 90%;
+	top: 5%;
+	transform: scale(65%);
+	margin: 0 auto;
+
+
+	/* Grid */
+	grid-template-columns: auto auto auto;
+	grid-template-rows: auto auto auto;
+	grid-gap: 2em;
+	
+	filter: drop-shadow(var(--drop-shadow-grid-offsets) var(--drop-shadow-grid-blur-radius) var(--drop-shadow-grid-color)) drop-shadow(-4px 4px 4px black);
+	
+	
+	/* Cursor */
+	pointer-events: none;
+	
+	/* Index */
+	z-index: var(--z-index-keystoner-buttons-container);
+
+}
+
+
+/******************************************
+*		KEYSTONER > VIDEO > Push Animation
+******************************************/
+.video-original {
+	transition: transform var(--push-duration) linear;
+	will-change: transform;
+}
+
+/******************************************
+*		KEYSTONER > OVERLAY > Push buttons
+******************************************/
+
+/* NORTH-WEST class */
+.push-northwest {
+    width: 0;
+    height: 0;
+    border-top: 100px solid var(--bg-corners);
+    border-right: 100px solid transparent;
+    margin: auto;
+    opacity: var(--opacity-corners);
+    filter: drop-shadow(var(--push-drop-shadow));
+    transition: opacity var(--transition-duration) var(--transition-type), filter ease 100ms;
+    
+    /* Cursor */
+    pointer-events: auto;
+}
+
+.push-northwest:hover {
+    border-top: 100px solid var(--bg-corners-hover);
+    opacity: var(--opacity-corners-hover);
+    filter: drop-shadow(3px 1px 0px white);
+}
+    
+.push-northwest:active {
+    transform: scale(110%);
+}
+
+/* NORTH class */
+.push-north {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid var(--bg-axis);
+    margin: auto;
+    opacity: var(--opacity-axis);
+    filter: drop-shadow(var(--push-drop-shadow));
+    transition: opacity var(--transition-duration) var(--transition-type), transform var(--transition-click-duration) var(--transition-click-type), filter ease 200ms;
+    
+    /* Cursor */
+    pointer-events: auto;
+}
+    
+.push-north:hover {
+    border-bottom: 100px solid var(--bg-axis-hover);
+    opacity: var(--opacity-axis-hover);
+    filter: drop-shadow(0px 1px 0px white);
+}
+
+.push-north:active {
+    transform: scale(110%);
+}
+
+/* NORTHEAST class */
+.push-northeast {
+    width: 0;
+    height: 0;
+    border-top: 100px solid var(--bg-corners);
+    border-left: 100px solid transparent;
+    margin: auto;
+    opacity: var(--opacity-corners);
+    filter: drop-shadow(var(--push-drop-shadow));
+    transition: opacity var(--transition-duration) var(--transition-type), transform var(--transition-click-duration) var(--transition-click-type), filter ease 100ms;
+    
+    /* Cursor */
+    pointer-events: auto;
+}
+  
+.push-northeast:hover {
+    border-top: 100px solid var(--bg-corners-hover);
+    opacity: var(--opacity-corners-hover);
+    filter: drop-shadow(-3px 1px 0px white);
+}
+
+.push-northeast:active {
+    transform: scale(110%);
+}
+
+/* WEST class */
+.push-west {
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-right: 100px solid var(--bg-axis);
+    border-bottom: 50px solid transparent;
+    margin: auto;
+    opacity: var(--opacity-axis);
+    filter: drop-shadow(var(--push-drop-shadow));
+    transition: opacity var(--transition-duration) var(--transition-type), transform var(--transition-click-duration) var(--transition-click-type), filter ease 200ms;
+    
+    /* Cursor */
+    pointer-events: auto;
+}
+    
+.push-west:hover {
+    border-right: 100px solid var(--bg-axis-hover);
+    opacity: var(--opacity-axis-hover);
+    filter: drop-shadow(3px 1px 0px white);
+}
+
+.push-west:active {
+    transform: scale(110%);
+}
+
+/* RESET class */
+.push-reset {
+	width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    background-color: var(--bg-reset);
+    text-align: center;
+    margin: auto;
+    padding: 40px 0px;
+    text-shadow: 1px 1px black;
+    opacity: var(--opacity-reset);
+    filter: drop-shadow(var(--push-drop-shadow));
+    transition: background-color 200ms linear, transform 500ms var(--transition-click-type);
+    
+    /* Cursor */
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none; /* Make text unselectable. */
+}
+    
+.push-reset:hover {
+	background-color: var(--bg-reset-hover);
+	opacity: var(--opacity-reset-hover);
+	transform: scale(105%);
+	filter: drop-shadow(2px 2px 0px black) opacity(100%);
+}
+
+.push-reset:active {
+	background-color: red;
+	transform: scale(98%);
+}
+
+
+/* EAST class */
+.push-east {
+    width: 0;
+	height: 0;
+	border-top: 50px solid transparent;
+	border-left: 100px solid var(--bg-axis);
+	border-bottom: 50px solid transparent;
+	margin: auto;
+	opacity: var(--opacity-axis);
+    filter: drop-shadow(var(--push-drop-shadow));
+	transition: opacity var(--transition-duration) var(--transition-type), transform var(--transition-click-duration) var(--transition-click-type), filter ease 200ms;
+	
+	/* Cursor */
+    pointer-events: auto;
+}
+  
+.push-east:hover {
+	border-left: 100px solid var(--bg-axis-hover);
+	opacity: var(--opacity-axis-hover);
+	filter: drop-shadow(-3px 1px 0px white);
+}
+
+.push-east:active {
+	transform: scale(110%);
+}
+
+/* SOUTH-WEST class */
+.push-southwest {
+	width: 0;
+	height: 0;
+	border-bottom: 100px solid var(--bg-corners);
+	border-right: 100px solid transparent;
+	margin: auto;
+	opacity: var(--opacity-corners);
+    filter: drop-shadow(var(--push-drop-shadow));
+	transition: opacity var(--transition-duration) var(--transition-type), filter ease 100ms;
+	
+	/* Cursor */
+    pointer-events: auto;
+}
+
+.push-southwest:hover {
+	border-bottom: 100px solid var(--bg-corners-hover);
+	opacity: var(--opacity-corners-hover);
+	filter: drop-shadow(3px -1px 0px white);
+}
+
+.push-southwest:active {
+	transform: scale(110%);
+}
+
+/* SOUTH class */
+.push-south {
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-top: 100px solid var(--bg-axis);
+	margin: auto;
+	opacity: var(--opacity-axis);
+	filter: drop-shadow(var(--drop-shadow-offsets) var(--drop-shadow-blur-radius) var(--drop-shadow-color));
+	transition: opacity var(--transition-duration) var(--transition-type), transform var(--transition-click-duration) var(--transition-click-type), filter ease 200ms;
+	
+	/* Cursor */
+    pointer-events: auto;
+}
+    
+.push-south:hover {
+	border-top: 100px solid var(--bg-axis-hover);
+	opacity: var(--opacity-axis-hover);
+	filter: drop-shadow(0px 1px 0px white);
+}
+
+.push-south:active {
+	transform: scale(110%);
+}
+
+/* SOUTH-EAST class */
+.push-southeast {
+	width: 0;
+	height: 0;
+	border-bottom: 100px solid var(--bg-corners);
+	border-left: 100px solid transparent;
+	margin: auto;
+	opacity: var(--opacity-corners);
+    filter: drop-shadow(var(--push-drop-shadow));
+	transition: opacity var(--transition-duration) var(--transition-type), transform var(--transition-click-duration) var(--transition-click-type), filter ease 100ms;
+	
+	/* Cursor */
+    pointer-events: auto;
+}
+    
+.push-southeast:hover {
+	border-bottom: 100px solid var(--bg-corners-hover);
+	opacity: var(--opacity-corners-hover);
+	filter: drop-shadow(-3px -1px 0px white);
+}
+
+.push-southeast:active {
+	transform: scale(110%);
+}
+
+/*******************************************
+*		LOUPE
+*******************************************/
+.loupe-overlay {
+	display: none; /* Don't show at the start. */
+}
+
+/*******************************************
+*		LOUPE > RESIZE
+*******************************************/
+.loupe-resize {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	margin: 0%;
+	border: 15px solid transparent;
+	opacity: 100%;
+
+	/* Grid */
+	display: grid;
+	align-content: start;
+	
+	/* Cursor */
+	pointer-events: none; /* Pass through the clicks that pass to Zoomer */
+	
+	/* Index */
+	z-index: var(--z-index-resize);
+}
+
+/******************************************
+*		LOUPE RESIZE > Buttons 
+*	(re-uses Keystoner 'Push' buttons !)
+******************************************/
+
+/* Button styling for RESIZE UI */
+.resize-btn {
+	position: var(--resize-btn-position);
+	transform: scale(25%);
+	
+  /* Cursor */
+	cursor: zoom-in; 
+	pointer-events: auto; /* Receive clicks */
+}
+
+.resize-btn:active {
+	transform: scale(30%);
+}
+
+.resize-btn:hover {
+	transform: scale(var(--resize-btn-scale-hover));
+}
+
+/* Button positions in the DIVs */
+.resize-northwest {
+	transform-origin: top left;
+	margin-top: 1px;
+  margin-left: 2px;
+	top: 0px;
+	left: 0px;
+}
+
+.resize-northeast {
+	transform-origin: top right;
+	margin-top: 1px;
+	margin-right: 2px;
+	top: 0px;
+	right: 0px;
+}
+
+.resize-southwest {
+	transform-origin: bottom left;
+	margin-left: 2px;
+	margin-bottom: 1px;
+	bottom: 0px;
+	left: 0px;
+}
+
+.resize-southeast {
+	transform-origin: bottom right;
+	margin-right: 2px;
+	margin-bottom: 1px;
+	bottom: 0px;
+	right: 0px;
+}
+
+/* Scaling Info */
+.resize-scaleinfo {
+	position: relative;
+	padding: 0px 8px;
+	opacity: 80%;
+	margin: auto auto;
+	background-color: grey;
+	
+	/* Font */
+	font-family: 'Roobert';
+	font-size: 1em;
+	color: white;
+
+	/* Filter */
+	filter: drop-shadow(4px 4px 0px white);
+	
+	transition: background-color cubic-bezier(0.6, 0.63, 0.83, 0.26) 5000ms, filter ease 1000ms, opacity ease 100ms;
+	
+	/* Index */
+	z-index: var(--z-index-resize-scaleinfo);
+}
+
+.resize-scaleinfo:hover {
+	color: white;
+	background-color: #c91010;
+	opacity: 100%;
+	
+	/* Filter */
+	filter: drop-shadow(-1px 1px 0px white) grayscale(0);
+	
+	/* Cursor */
+	cursor: pointer;
+}
+ 
+/******************************************
+*		LOUPE > WINDOW
+******************************************/
+/* Pass through the clicks that pass to Zoomer */
+.loupe-window {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transform-origin: 0% 0%;
+	
+	/* Cursor */
+	cursor: grab;
+	pointer-events: none;
+	
+	/* Index */
+	z-index: var(--z-index-window);
+}
+
+/******************************************
+*		LOUPE > CANVAS
+******************************************/
+.canvas {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transform-origin: 0% 0%;
+	
+	/* Cursor */
+	pointer-events: none; /* Pass through the clicks that pass to Zoomer */
+	
+	/* Index */
+	z-index: var(--z-index-canvas);
+}
+
+/******************************************
+*		LOUPE > DRAGBOX
+******************************************/
+
+.loupe-drag-box {
+	border: 0.5vh dashed #a9a9a994;
+	opacity: 100%;
+	transition: background-color ease 100ms, border ease 100ms, filter ease 800ms;
+	
+	/* Cursor */
+	pointer-events: none; /* Pass through the clicks that pass to Zoomer */
+}
+
+.loupe-drag-box:active {
+	background-color: rgba(255, 255, 255, 0.4);
+	border: 0.3vh dashed DarkGrey;
+	filter: grayscale(1);
+}
+
+/******************************************
+*		LOUPE > DRAGBOX > Handles
+******************************************/
+
+/* All Dragbox Edges Handle */
+.loupe-drag {
+	position: var(--dragbox-resizer-position);
+	opacity: 0%;
+	padding: 0px 0px;
+	transition: padding ease 300ms, opacity linear 500ms;
+	
+	/* Cursor */
+	pointer-events: auto; /* Receive clicks */
+	
+	/* Index */
+	z-index: var(--z-index-drag);
+}
+.loupe-drag:hover {
+	background:url(
+	data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAABtJREFUGFdjZGBg+M+ABBihbJAgiP0fTOBVAQC2ZAYBHzO6GgAAAABJRU5ErkJggg==
+	) repeat;
+  
+	filter: invert(1) brightness(0.5) drop-shadow(2px 2px 5px black);
+	padding: 22px 22px;
+	opacity: 40%;
+}
+.loupe-drag:active {
+	border: 0px solid DarkSlateBlue;
+	opacity: 0%;
+}
+
+
+/* Dragbox Edge Handle Placements and Sizes. */
+.loupe-drag-left {
+	cursor: all-scroll;
+	left: 0;
+	width: var(--dragbox-resizer-handle-thickness);
+	height: 100%;
+}
+
+.loupe-drag-top {
+	cursor: all-scroll;
+	top: 0;
+	width: 100%;
+	height: var(--dragbox-resizer-handle-thickness);
+}
+
+.loupe-drag-right {
+	cursor: all-scroll;
+	right: 0;
+	width: var(--dragbox-resizer-handle-thickness);
+	height: 100%;
+}
+
+.loupe-drag-bottom {
+	cursor: all-scroll;
+	bottom: 0;
+	width: 100%;
+	height: var(--dragbox-resizer-handle-thickness);
+}
+
+
+/******************************************
+*		LOUPE > DRAGBOX > Corners
+******************************************/
+
+/* Styling for all */
+
+.loupe-drag-corner {
+	position: var(--dragbox-resizer-position);
+	opacity: 100%;
+	background-color: RebeccaPurple;
+	width: 14px;
+	height: 14px;
+	border: 2px solid #5f32a7;
+	margin: 2px 2px;
+	transition: color linear 500ms;
+	
+	/* Cursor */
+	pointer-events: auto; /* Receive clicks */
+	
+	/* Index */
+	z-index: var(--z-index-drag-corner);
+}
+.loupe-drag-corner:hover {
+	transform: scale(120%);
+	background-color: grey;
+	border: 1px solid #646060;
+	opacity: 50%;
+	transition: opacity ease 800ms;
+}
+.loupe-drag-corner:active {
+	opacity: 15%;
+}
+
+
+/* Styling for individual corners */
+.loupe-drag-topleft {
+	cursor: nw-resize;
+	top: 2px;
+	left: 2px;
+	clip-path: polygon(100% 50%, 100% 0, 0 0%, 0 100%, 50% 100%, 50% 50%);
+}
+
+.loupe-drag-topright {
+	cursor: ne-resize;
+	top: 2px;
+	right: 2px;
+	clip-path: polygon(100% 100%, 100% 0, 0 0%, 0 50%, 50% 50%, 50% 100%);
+}
+
+.loupe-drag-bottomleft {
+	cursor: sw-resize;
+	bottom: 2px; /* -1px; */
+	left: 2px; /* -1px; */
+	clip-path: polygon(100% 50%, 50% 50%, 50% 0%, 0 0%, 0% 100%, 100% 100%);
+}
+
+.loupe-drag-bottomright {
+	cursor: se-resize;
+	bottom: 2px;
+	right: 2px;
+	clip-path: polygon(100% 0, 50% 0%, 50% 50%, 0% 50%, 0% 100%, 100% 100%);
+}
