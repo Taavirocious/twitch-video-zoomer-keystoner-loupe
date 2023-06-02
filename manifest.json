@@ -1,6 +1,6 @@
 {
     "name": "Twitch Video Zoomer, Keystoner & Loupe",
-    "description": "Zoom in to video on twitch.tv to magnify and enlarge.",
+    "description": "Zoom in to video on twitch.tv to magnify, tilt and enlarge.",
     "version": "0.19",
     "manifest_version": 3,
     "permissions": [
