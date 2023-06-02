@@ -15,7 +15,7 @@
                 "zoomer_script.js"
             ],
             "css": [
-		        "loupe_styling.css"
+		 "zoomer_styling.css"
             ],
             "run_at": "document_end"
         }
