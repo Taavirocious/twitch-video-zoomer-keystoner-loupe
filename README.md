@@ -23,5 +23,7 @@ Usage on Chromium based browsers:
 1.  Download the repository and unzip it into a folder.
 2.  Turn on Developer Mode.
 3.  Head over to the browser's extensions page and hit "Load Unpacked".
+4.  Navigate into the extension folder and hit "Select folder".
+5.  Done.
 
 Note: this will always read it from the folder you unpacked the .zip into, so consider the placement of it.
