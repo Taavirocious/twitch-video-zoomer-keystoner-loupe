@@ -16,7 +16,7 @@ Keystoner functions as its own sole functionality, tilting the video for inoppor
   + Arrow Down  - Move video down.
   + Arrow Left  - Move video left.
   + Arrow Right - Move video right.
-  + "+          - Zooms in.
+  + "+"         - Zooms in.
   + "-"         - Zooms out.
 
 Usage on Chromium based browsers:
