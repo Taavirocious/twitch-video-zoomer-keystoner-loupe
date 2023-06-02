@@ -12,7 +12,7 @@
                 "*://*.twitch.tv/*"
             ],
             "js": [
-                "zoom_script.js"
+                "zoomer_script.js"
             ],
             "css": [
 		        "loupe_styling.css"
