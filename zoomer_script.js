@@ -1405,7 +1405,7 @@ setTimeout(() => {
 	right_collapse.addEventListener("click", updateDimensions_withTimeout, false);
 }, 5000)
 
-//Whenever the window is resized, the width of the Overlay is adjusted.
+//Whenever the window is resized, the dimensions of the Overlay are adjusted.
 window.addEventListener('resize', function(event) {
     updateDimensions();
 }, true);
