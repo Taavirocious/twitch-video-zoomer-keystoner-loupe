@@ -5,7 +5,7 @@ Zoomer and Loupe can be combined at the same time for different placements and s
 
 Keystoner functions either as its own sole functionality or in conjunction with Zoomer, tilting the video for inopportunely placed monitors (or known in more severe cases of.... slouching), giving the illusion of even perspective.
 
-# Examples
+# Examples of new functionality
 ## Resizing an area from the corner.
 <img src="https://github.com/Taavirocious/twitch-video-zoomer-keystoner-loupe/blob/main/example_single.png" width=50% height=50%>
 
