@@ -1,7 +1,7 @@
 # twitch-video-zoomer-keystoner-loupe
 A fork of mogue's 'Chrome plugin for zoom on twitch.tv' (https://github.com/mogue/twitch-video-zoomer), adding a Keystoner and a resizable Magnifying Glass.
 
-Zoomer and Loupe can be combined at the same time for different placements and scale, i.e you could have an enlarged camera while simultaneously the rest of the video area can be decreased in size and in full view unobscured.
+Zoomer and Loupe can be combined at the same time for different placements and scale within any area of the video, i.e you could have an enlarged camera while simultaneously the rest of the video area can be decreased in size and in full view unobscured.
 
 Keystoner functions either as its own sole functionality or in conjunction with Zoomer, tilting the video for inopportunely placed monitors (or known in more severe cases of.... slouching), giving the illusion of even perspective.
 
