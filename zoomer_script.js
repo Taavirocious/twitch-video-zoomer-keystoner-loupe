@@ -697,31 +697,35 @@ var updateDimensions = () => {
 	
 	//Percentage at which video starts on the left. Always a positive value.
 	var actual_vid_left = ((100 - vid_width_perc) / 2);
-	//Percentage at which video starts on the left. Always a positive value.
+	//Percentage at which video starts on the top. Always a positive value.
 	var actual_vid_top = ((100 - vid_height_perc) / 2);
 
 	
 	//DEBUG
 	//console.log('current AR:', current_aspect_ratio);
-	//console.log('actual video width:', vid_width);
-	//console.log('actual video width in %:', vid_width_perc);
-	//console.log('Left video start %: ', actual_vid_left);
+	//console.log('actual video width:', vid_width, 'actual video height:', vid_height);
+	//console.log('actual video width in %:', vid_width_perc, 'actual video height in %:', vid_height_perc);
+	//console.log('Left video start %: ', actual_vid_left, 'Top video start %', actual_vid_top);
 
 	
 	//When player area is wider than the video, squeeze Loupe to the width of the video.
 	if (current_aspect_ratio > default_aspect_ratio) {
-		//Update width.
+		//Update width & height.
 		container.style.width = vid_width_perc + "%";
+		container.style.height = '100%';
 		
-		//Update left.
+		//Update left and top.
 		container.style.left = actual_vid_left + "%";
+		container.style.top = 0 + "%";
 	} 
 	//When player area is higher than the video, squeeze Loupe to the height of the video.
 	else if (current_aspect_ratio < default_aspect_ratio){
-		//Update height.
-		container.style.width = vid_height_perc + "%";
+		//Update width & height.
+		container.style.width = '100%';
+		container.style.height = vid_height_perc + "%";
 		
-		//Update top.
+		//Update left and top.
+		container.style.left = 0 + "%";
 		container.style.top = actual_vid_top + "%";
 	}
 	//Otherwise, when all matches, set Loupe at 100%.
@@ -1397,12 +1401,14 @@ var updateDimensions_withTimeout = () => {
 	}, 10)
 }
 
-//Whenever the left or right pane are collapsed or extended, refit the dimensions.
+//Whenever the theatre mode, left or right pane are collapsed or extended, refit the dimensions.
 setTimeout(() => {
 	var left_collapse = document.getElementsByClassName("collapse-toggle")[0];
 	left_collapse.addEventListener("click", updateDimensions_withTimeout, false);
 	var right_collapse = document.getElementsByClassName("right-column__toggle-visibility")[0];
 	right_collapse.addEventListener("click", updateDimensions_withTimeout, false);
+	var theatre_mode = document.querySelector('[data-a-target="player-theatre-mode-button"]');
+	theatre_mode.addEventListener("click", updateDimensions_withTimeout, false);
 }, 5000)
 
 //Whenever the window is resized, the dimensions of the Overlay are adjusted.
