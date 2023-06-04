@@ -1,12 +1,22 @@
 # twitch-video-zoomer-keystoner-loupe
 A fork of mogue's 'Chrome plugin for zoom on twitch.tv' (https://github.com/mogue/twitch-video-zoomer), adding a Keystoner and a resizable Magnifying Glass.
 
+Zoomer and Loupe can be combined at the same time for different placements and scale, i.e you could have an enlarged camera while simultaneously the rest of the video area can be decreased in size and in full view unobscured.
 
-Zoomer and Loupe can be combined at the same time, i.e you could have an enlarged camera while simultaneously the rest of the video area can be decreased in size and in full view unobscured.
+Keystoner functions either as its own sole functionality or in conjunction with Zoomer, tilting the video for inopportunely placed monitors (or known in more severe cases of.... slouching), giving the illusion of even perspective.
 
-Keystoner functions as its own sole functionality, tilting the video for inopportunely placed monitors (or known in more severe cases of.... slouching), giving the illusion of even perspective.
+# Examples
+## Resizing an area from the corner.
+<img src="https://github.com/Taavirocious/twitch-video-zoomer-keystoner-loupe/blob/main/example_single.png" width=50% height=50%>
 
-+ Shortcuts:
+## Resizing the facecam & simultaneously reducing the size of the gameplay for visibility.
+<img src="https://github.com/Taavirocious/twitch-video-zoomer-keystoner-loupe/blob/main/example_dual.png" width=50% height=50%>
+
+## Perspective correction accounting for a viewer sitting lower-left.
+<img src="https://github.com/Taavirocious/twitch-video-zoomer-keystoner-loupe/blob/main/example_keystone.png" width=50% height=50%>
+
+# Hotkeys
++ Every function:
   + Double click on Icon - Reset Zoomer, Keystoner & Loupe to Default.
 
 + Zoomer only shortcuts:
@@ -19,7 +29,7 @@ Keystoner functions as its own sole functionality, tilting the video for inoppor
   + "+"         - Zooms in.
   + "-"         - Zooms out.
 
-Usage on Chromium based browsers:
+# Usage on Chromium based browsers:
 1.  Download the repository and unzip it into a folder.
 2.  Turn on Developer Mode.
 3.  Head over to the browser's extensions page and hit "Load Unpacked".
