@@ -1,5 +1,5 @@
 //////////////////////////////////////////////
-////   Zoomer, Keystoner & Loupe v0.19    ////
+////   Zoomer, Keystoner & Loupe v0.20    ////
 //////////////////////////////////////////////
 
 //Note: All the individual tools are wrapped into a single container at the end.
@@ -1391,7 +1391,7 @@ container.appendChild(keystoner_overlay);
 container.appendChild(loupe_overlay);
 
 /*************************************
-*		DOCUMENT > EVENTS
+*		DOCUMENT > Functions
 *************************************/
 
 //Update the dimensions of Overlay after the initialized action has finished executing.
@@ -1401,21 +1401,55 @@ var updateDimensions_withTimeout = () => {
 	}, 10)
 }
 
-//Whenever the theatre mode, left or right pane are collapsed or extended, refit the dimensions.
-setTimeout(() => {
-	var left_collapse = document.getElementsByClassName("collapse-toggle")[0];
-	left_collapse.addEventListener("click", updateDimensions_withTimeout, false);
-	var right_collapse = document.getElementsByClassName("right-column__toggle-visibility")[0];
-	right_collapse.addEventListener("click", updateDimensions_withTimeout, false);
-	var theatre_mode = document.querySelector('[data-a-target="player-theatre-mode-button"]');
-	theatre_mode.addEventListener("click", updateDimensions_withTimeout, false);
-}, 5000)
+//Add back the 'Theatre Mode' listener after it has been removed.
+var theatreModeListener = () => {
+	//Delay until fullscreen has fully exited.
+	setTimeout(() => {
+		var theatre_mode = document.querySelector('[data-a-target="player-theatre-mode-button"]');
+		theatre_mode.addEventListener("click", updateDimensions_withTimeout, false);
+	}, 10)
+}
 
-//Whenever the window is resized, the dimensions of the Overlay are adjusted.
+/*************************************
+*		DOCUMENT > Events
+*************************************/
+
+/* Whenever the theatre mode, left or right pane are collapsed or extended, refit the dimensions. */
+
+/* Panels */
+var left_collapse = document.getElementsByClassName("collapse-toggle")[0];
+left_collapse.addEventListener("click", updateDimensions_withTimeout, false);
+var right_collapse = document.getElementsByClassName("right-column__toggle-visibility")[0];
+right_collapse.addEventListener("click", updateDimensions_withTimeout, false);
+	
+/* Theatre Mode */
+var theatre_mode = document.querySelector('[data-a-target="player-theatre-mode-button"]');
+theatre_mode.addEventListener("click", updateDimensions_withTimeout, false);
+	
+//Hotkey
+document.addEventListener('keydown', e => {if (e.altKey && (e.key == "T" || e.key == "t"))
+{ updateDimensions(); } }, false);
+
+//When entering fullscreen, 'Theatre Mode' elements get removed from the controls.
+//Re-insert the listener AFTER a fullscreen.
+var fullscreenDetect = window.matchMedia('(display-mode: fullscreen)');
+fullscreenDetect.addEventListener('change', function({matches}){
+	if (matches == false){
+		theatreModeListener();
+		//console.log('added listener');
+	}
+}, false);
+
+
+/* Window */
+//Whenever the window is resized, the dimensions of the container are adjusted.
 window.addEventListener('resize', function(event) {
     updateDimensions();
 }, true);
 
+/*************************************
+*		DOCUMENT > Updates
+*************************************/
 
 var oldHref = document.location.href;
 
