@@ -1415,31 +1415,31 @@ var theatreModeListener = () => {
 *************************************/
 
 /* Whenever the theatre mode, left or right pane are collapsed or extended, refit the dimensions. */
-
-/* Panels */
-var left_collapse = document.getElementsByClassName("collapse-toggle")[0];
-left_collapse.addEventListener("click", updateDimensions_withTimeout, false);
-var right_collapse = document.getElementsByClassName("right-column__toggle-visibility")[0];
-right_collapse.addEventListener("click", updateDimensions_withTimeout, false);
+setTimeout(() => {
+	/* Panels */
+	var left_collapse = document.getElementsByClassName("collapse-toggle")[0];
+	left_collapse.addEventListener("click", updateDimensions_withTimeout, false);
+	var right_collapse = document.getElementsByClassName("right-column__toggle-visibility")[0];
+	right_collapse.addEventListener("click", updateDimensions_withTimeout, false);
 	
-/* Theatre Mode */
-var theatre_mode = document.querySelector('[data-a-target="player-theatre-mode-button"]');
-theatre_mode.addEventListener("click", updateDimensions_withTimeout, false);
+	/* Theatre Mode */
+	var theatre_mode = document.querySelector('[data-a-target="player-theatre-mode-button"]');
+	theatre_mode.addEventListener("click", updateDimensions_withTimeout, false);
 	
-//Hotkey
-document.addEventListener('keydown', e => {if (e.altKey && (e.key == "T" || e.key == "t"))
-{ updateDimensions(); } }, false);
+	//Hotkey
+	document.addEventListener('keydown', e => {if (e.altKey && (e.key == "T" || e.key == "t"))
+	{ updateDimensions(); } }, false);
 
-//When entering fullscreen, 'Theatre Mode' elements get removed from the controls.
-//Re-insert the listener AFTER a fullscreen.
-var fullscreenDetect = window.matchMedia('(display-mode: fullscreen)');
-fullscreenDetect.addEventListener('change', function({matches}){
-	if (matches == false){
-		theatreModeListener();
-		//console.log('added listener');
-	}
+	//When entering fullscreen, 'Theatre Mode' elements get removed from the controls.
+	//Re-insert the listener AFTER a fullscreen.
+	var fullscreenDetect = window.matchMedia('(display-mode: fullscreen)');
+	fullscreenDetect.addEventListener('change', function({matches}){
+		if (matches == false){
+			theatreModeListener();
+			//console.log('added listener');
+		}
 }, false);
-
+}, 5000)
 
 /* Window */
 //Whenever the window is resized, the dimensions of the container are adjusted.
