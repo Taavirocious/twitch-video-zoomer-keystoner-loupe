@@ -1,5 +1,5 @@
 //////////////////////////////////////////////
-////   Zoomer, Keystoner & Loupe v0.20    ////
+////   Zoomer, Keystoner & Loupe v0.21    ////
 //////////////////////////////////////////////
 
 //Note: All the individual tools are wrapped into a single container at the end.
@@ -511,6 +511,17 @@ loupe_overlay.appendChild(loupe_window);
 /*************************************
 *		LOUPE > CANVAS
 *************************************/
+var canvas_active = false;
+
+/* Disable canvas upon full reset for initial Zoomer passthrough. */
+var ShowCanvas = () => {
+    if (!canvas_active){
+    	canvas_element.style.display = "none";
+    	canvas_active = true;
+    } else {
+    	canvas_element.style.display = "block";
+    }
+}
 
 //Create the canvas where the video will be drawn on.
 var canvas_element = document.createElement('canvas');
@@ -570,7 +581,6 @@ var ToggleLoupe = () => {
 loupe_on = !loupe_on;
     if (loupe_on) {
         loupe_overlay.style.display = "block";
-        canvas_element.style.display = "block";
 		loupe_window.style.display = "block";
 		loupe_on = true;
 		updateDimensions();
@@ -580,6 +590,9 @@ loupe_on = !loupe_on;
 		
 		//Crops the loupe.
 		CropperWindow();
+	    
+	    //On first run, disables canvas until resize or reposition.
+	    ShowCanvas();
 		
 		
     } else {
@@ -592,12 +605,14 @@ loupe_on = !loupe_on;
 var ResetLoupe = () => {
 
     /* Reset Loupe Overlay, Window & Canvas. */
-    //Disable visibility.
+    //Disable visibility on Loupe.
 	loupe_on = false;
 	
 	loupe_overlay.style.display  = "none";	//Overlay Container.
 	loupe_window.style.display   = "none";	//Loupe Window.
-	canvas_element.style.display = "none";	//Image Canvas.
+	
+	//Disable visibility on canvas.
+	canvas_active = false; //Image Canvas.
 	
 	//Default variables.
 	loupe_window_left	= 0;
@@ -670,6 +685,10 @@ var ResetLoupe = () => {
 	//Reset window cropping.
 	skipWindowCrop == false;
 	CropperWindow();
+	
+	//Reset pointer passthrough.
+    	loupe_window.style.pointerEvents = 'none';
+    	loupe_resize.style.pointerEvents = 'none';
 };
 
 /* Update Loupe Dimensions */
@@ -755,7 +774,7 @@ var DrawCanvas = () => {
 		
 		//Example: Image, then dest X, dest Y, dest width, dest height.
 		//context.drawImage(twitch_vid, 50, 150, 640, 360, 8, 8, 640, 360);
-    	}, 8.333) //16.666 for 30fps. 8.333 for 60fps.
+    	}, 16.666) //33.333 for 30fps. 16.666 for 60fps. 8.333 for 120fps.
 	};
 };
 
@@ -955,7 +974,9 @@ var LoupeDragboxMouseDown = (e) => {
     skipWindowCrop = true;
     CropperWindow();
     
-    //Draw Image
+    //Declare canvas is in use, show the canvas and draw an image.
+    canvas_active = true;
+    ShowCanvas();
     DrawCanvas();
     
     //Change from clicks passing through to Zoomer to catching them.
@@ -1196,7 +1217,9 @@ var LoupeResizeMouseDown = (e) => {
     skipWindowCrop = true;
     CropperWindow();
     
-    //If it hasn't been drawn yet, draw the canvas upon resize initialization.
+    //Declare canvas is in use, show the canvas and draw an image upon resize event.
+    canvas_active = true;
+    ShowCanvas();
     DrawCanvas();
     
     //Change from clicks passing through to Zoomer to catching them.
